@@ -1,1 +1,7 @@
-react_redux_todo
+# React Redux TODO
+
+```
+npm run start
+or
+yarn run start
+```
