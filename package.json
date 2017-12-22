@@ -20,7 +20,7 @@
     "webpack-dev-server": "^2.9.7"
   },
   "scripts": {
-    "build": "prettier --single-quote --write src/*/*.js && webpack --progress --color",
+    "build": "prettier --single-quote --write 'src/**/*.js' && webpack --progress --color",
     "start": "NODE_ENV=development webpack-dev-server --watch --progress --color"
   }
 }
