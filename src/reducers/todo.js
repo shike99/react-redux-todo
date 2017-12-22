@@ -11,9 +11,21 @@ const todos = handleActions(
         ...state,
         {
           id: stateCount === 0 ? 1 : state[stateCount - 1].id + 1,
-          text: action.payload
+          text: action.payload.text,
+          isCompleted: false
         }
       ];
+    },
+    [actionTypes.TOGGLE_TODO]: (state, action) => {
+      return state.map(
+        todo =>
+          todo.id === action.payload.id
+            ? {
+                ...todo,
+                isCompleted: !todo.isCompleted
+              }
+            : todo
+      );
     }
   },
   initialState

@@ -6,3 +6,10 @@ export const addTodo = payload => {
     payload
   };
 };
+
+export const toggleTodo = payload => {
+  return {
+    type: actionTypes.TOGGLE_TODO,
+    payload
+  };
+};

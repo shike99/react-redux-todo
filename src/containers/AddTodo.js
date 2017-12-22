@@ -1,11 +1,16 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { addTodo } from '../actions/actions';
+import * as actions from '../actions/actions';
 
-const AddTodoForm = ({ dispatch }) => {
-  const onSubmit = (e) => {
+const mapDispatchToProps = dispatch => {
+  return { actions: bindActionCreators(actions, dispatch) };
+};
+
+let AddTodo = ({ actions }) => {
+  const onSubmit = e => {
     e.preventDefault();
-    dispatch(addTodo(this.text.value));
+    actions.addTodo({ text: this.text.value });
     this.text.value = '';
   };
 
@@ -17,6 +22,6 @@ const AddTodoForm = ({ dispatch }) => {
   );
 };
 
-const AddTodo = connect()(AddTodoForm);
+AddTodo = connect(null, mapDispatchToProps)(AddTodo);
 
 export default AddTodo;
