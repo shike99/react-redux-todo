@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
+    "gh-pages": "^1.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
@@ -20,7 +21,11 @@
     "webpack-dev-server": "^2.9.7"
   },
   "scripts": {
-    "build": "prettier --single-quote --write 'src/**/*.js' && NODE_ENV=production webpack --progress --color",
-    "start": "NODE_ENV=development webpack-dev-server --watch --progress --color"
+    "format": "prettier --single-quote --write 'src/**/*.js'",
+    "prebuild": "npm run format",
+    "build": "NODE_ENV=production webpack --progress --colors",
+    "start": "NODE_ENV=development webpack-dev-server --watch --progress --colors",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 }
