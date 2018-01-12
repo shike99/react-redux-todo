@@ -1,5 +1,7 @@
 const webpack = require('webpack');
 
+const PRODUCTION = process.env.NODE_ENV === 'production';
+
 module.exports = {
   entry: './src/index.js',
   output: {
@@ -9,7 +11,7 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     contentBase: './build/',
-    port: 8080,
+    port: 3000,
     inline: true,
     hot: true
   },
@@ -22,17 +24,32 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: [
-                ['env', {'modules': false}],
-                'react'
-              ]
+              presets: [['env', { modules: false }], 'react']
             }
           }
-        ],
+        ]
       }
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.ProvidePlugin({
+      React: 'react'
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      }
+    }),
+    ...(PRODUCTION
+      ? [
+          new webpack.optimize.UglifyJsPlugin({
+            compress: {
+              warnings: false
+            }
+          }),
+          new webpack.optimize.OccurrenceOrderPlugin()
+        ]
+      : [])
   ]
-}
+};
